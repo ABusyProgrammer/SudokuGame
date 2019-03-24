@@ -1,9 +1,295 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
 
-</body>
+    <head>
+        <link href="sudoku.css" rel="stylesheet" type="text/css">
+        <script>
+             var board;            
+           
+             
+                function random(max){
+                    var value = Math.floor  ( Math.random()*max);
+                    return value;
+                }
+    
+                    //convert my row and column to a quandrant #
+                function getMyQ (r,c){
+                    
+                    var qR, qC;
+                    if (r<3)
+                        qR = 0;
+                    else if (r>5)
+                        qR=2;
+                    else 
+                        qR=1;
+                    
+                    if (c<3)
+                        qC = 0;
+                    else if (c>5)
+                        qC=2;
+                    else 
+                        qC=1;
+                    
+                    return "" + qR + "_" + qC;
+                    
+                }
+    
+    
+                    function changed( which){
+                       // alert("" + which.selectedIndex);
+                       //get the row and the column of "which"
+                       var rc  = which.getAttribute("id");
+                       //alert(rc);
+                       var r = rc.slice(6,7);
+                       var c = rc.slice(8,9);
+                                              
+                       //check the same row for any other ones
+                       for (var cc=0;cc<9;cc++){
+                           if (!(cc==c)){
+                               var otherSelected = document.getElementById("select" + r + "_" + cc);
+                               if (otherSelected.selectedIndex === which.selectedIndex ){
+                                   alert('There is already that number in the same row.  Please select another value');
+                                   which.selectedIndex=0;
+                                    return false;
+                               }
+                           }
+                             
+                       }
+                       
+                       
+                       //check the same column
+                       for (var rr=0;rr<9;rr++){
+                           if (!(rr==r)){
+                               var otherSelected = document.getElementById("select" + rr + "_" + c);
+                               if (otherSelected.selectedIndex === which.selectedIndex ){
+                                   alert('There is already that number in the same column.  Please select another value');
+                                   which.selectedIndex=0;
+                                    return false;
+                               }
+                           }
+                             
+                       }
+                       
+                       //check in the same quadrant
+                       
+                       var myQ = getMyQ(r,c);
+                       for (var r1=0;r1<9;r1++){
+                           for (var c1=0;c1<9;c1++){
+                               if (r1==r && c1==c)
+                                   continue;
+                               if (myQ === getMyQ(r1,c1)    ){
+                               //    alert(getMyQ(r1,c1));
+                                   var otherSelected = document.getElementById("select" + r1 + "_" + c1);
+                                   if (which.selectedIndex === otherSelected.selectedIndex){
+                                   alert('There is already that number in the same quadrant.  Please select another value');
+                                   which.selectedIndex=0;
+                                    return false;       
+                                }
+                               }
+                           }
+                       }
+                       
+                        //check if win
+                        var win = true;
+                        for (var rz = 0;rz<9;rz++){
+                            for (var cz = 0; cz<9;cz++){
+                                   var s = document.getElementById("select" + rz + "_" + cz);
+                                   if (s.selectedIndex===0){
+                                       win=false;
+                                       break;
+                                   }
+                            }
+                            if (!win){
+                                break;
+                            }
+                        }
+                        
+                       if (win){
+                           alert("You win the game!");
+                       }
+    
+                    }
+    
+            function openSeveral(){
+                var many = 30;
+                for (var i=0;i<many;i++){
+                    var r = random(9);
+                    var c = random(9);
+                  //  alert(r + "_" + c);
+                    var drp = document.getElementById("select" + r + "_" + c);
+                    drp.selectedIndex = board[r*9+c];
+                    
+                }
+                
+            }
+            
+            
+            ////////////////////////////////
+            function generateTable(){
+                
+        var table = document.getElementById("sudokuTable");
+        for (var r = 0;r<9;r++){
+            var row = table.insertRow(r);
+            for (var c=0;c<9;c++){
+                var cell = row.insertCell(c);
+                cell.innerHTML=
+                        
+                 "<select id='select" + r + "_" + c + "' onchange='changed(this);'>" +
+                    "<option value='0' selected> </option>" +
+                     "<option value='1' > 1</option>" +
+                     "<option value='2' > 2</option>" +
+                     "<option value='3' > 3</option>" +
+                     "<option value='4' > 4</option>" +
+                     "<option value='5' > 5</option>" +
+                     "<option value='6' > 6</option>" +
+                     "<option value='7' > 7</option>" +
+                     "<option value='8' > 8</option>" +
+                     "<option value='9' > 9</option>" +
+                "</select>"
+                    ;
+            }
+        }
+
+                
+                
+                
+            }
+            ///////////////////////////////
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+              function colSwap(){
+                  
+                var band = random(3);    //band 0,1,2  (rows are within the same band)
+        
+                var c1 = 0,c2=0;
+                while (c1==c2){
+                    c1 = random(3);
+                    c2 = random(3);
+                 }
+        
+                var cc1 = band*3+c1;
+                var cc2 = band*3+c2;
+        
+        //rr1 and rr2 are within the same band.  swap them
+        
+        //go horizontally
+        //swapped
+            for (var r = 0;r<9;r++){
+                var temp = getBoardValue(r,cc1);
+                setBoardValue(r,cc1,  getBoardValue(r,cc2)); // board[r][cc1] = board[r][cc2];
+                setBoardValue(r,cc2,temp);//        board[r][cc2] = temp;
+            }
+        }
+  
+    
+       function rowSwap(){
+        
+        var band = random(3);    //band 0,1,2  (rows are within the same band)
+        
+        var r1 = 0,r2=0;
+        while (r1==r2){
+            r1 = random(3);
+            r2 = random(3);
+        }
+        
+        var rr1 = band*3+r1;
+        var rr2 = band*3+r2;
+        
+        //rr1 and rr2 are within the same band.  swap them
+        
+        //go horizontally
+        //swapped
+        for (var c = 0;c<9;c++){
+            var temp = getBoardValue(rr1,c);  //board[rr1][c];
+            setBoardValue(rr1,c,  getBoardValue(rr2,c)); //board[rr1][c] = board[rr2][c];
+            setBoardValue(rr2,c,temp);//  board[rr2][c] = temp;
+        }
+        
+        
+    }
+    
+        
+    
+    
+            
+            function setBoardValue(row, col, value){
+                var index = row *9 + col;
+                board[index] = value;
+            }
+            
+            function getBoardValue(row,col){
+                var index = row*9+col;
+                return board[index];
+            }
+            
+            function generateBoard(){
+                     board = [ 1,2,3,4,5,6,7,8,9,
+                              4,5,6,7,8,9,1,2,3,
+                              7,8,9,1,2,3,4,5,6,
+                             
+                             3,1,2,6,4,5,9,7,8,
+                             5,6,4,9,7,8,3,1,2,
+                             9,7,8,3,1,2,6,4,5,
+                             
+                             2,3,1,5,6,4,8,9,7,
+                             6,4,5,8,9,7,2,3,1,
+                             8,9,7,2,3,1,5,6,4]
+                        ;
+                    for (var i=0;i<100;i++){
+                        rowSwap();
+                        colSwap();
+                    }
+  
+            }
+        
+        
+        
+        </script>
+        
+        
+        
+        
+        
+        <title>PuzzleMania</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        
+        
+        
+         <div style="width:100%;font-size:200%;text-align:center;">
+             <h1 style="color:white;margin-top:0px;margin-bottom:0px">PuzzleMania</h1>
+         
+        <table border="1" id="sudokuTable">
+            
+        </table>
+         </div>
+            <script>
+                
+            
+    
+            generateTable();
+       
+       
+            generateBoard();
+            
+            openSeveral();
+            </script>
+            
+            
+            
+        
+         
+         
+         
+    </body>
 </html>
