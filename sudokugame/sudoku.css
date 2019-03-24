@@ -1,1 +1,12 @@
-
+select {
+    background-color:#12a2ff;
+    font-size:40px;
+}
+table {
+    margin: 0 auto; /* or margin: 0 auto 0 auto */
+  }
+  
+  body {
+    background: url("cosmo.jpg") no-repeat;
+    background-size: cover;
+  }
