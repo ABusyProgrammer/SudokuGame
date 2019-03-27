@@ -1,13 +1,36 @@
-select {
+/*
+ * Date Made  - 20 - March - 2019 @ 3:32 AM
+ * Course     - Principles of Software and Requirements for Engineering | SOFE 2720u
+ *
+ * Purpose:
+ *      - Major Project | Iterable #1 - Sudoku Game Implementation | CSS Styling & Design File
+ *
+ * About:
+ *      - The main purpose of this file is to cerve as a entralized location for all the required styling
+ *
+ * Input      - User-Input to the Puzzle
+ * Output     - Updating the User Interface, and notifying the user of invalid moves
+ */
+
+/* Set the styling features for the "select" feature */
+select
+{
+    /* Set the background color and font size */
     background-color:#12a2ff;
     font-size:40px;
 }
 
-table {
+/* Set the styling features for the "table" feature */
+table
+{
+    /* Set the margin */
     margin: 0 auto; /* or margin: 0 auto 0 auto */
-  }
-  
-  body {
+}
+
+/* Set the styling features for the "body" feature */
+body
+{
+    /* Set the background to the cosmo.jpg picture, and make sure it covers the entire page */
     background: url("cosmo.jpg") no-repeat;
     background-size: cover;
-  }
+}

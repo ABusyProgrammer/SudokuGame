@@ -1,23 +1,54 @@
+<!--
+ * Date Made  - 20 - March - 2019 @ 3:32 AM
+ * Course     - Principles of Software and Requirements for Engineering | SOFE 2720u
+ *
+ * Purpose:
+ *      - Major Project | Iterable #1 - Sudoku Game Implementation | HTML Markup File
+ *
+ * About:
+ *      - The main purpose of this file is to serve as the visual demonstration of the implemented Sudoku Algorithm in
+ *        Javascript
+ *
+ * Input      - User-Input to the Puzzle
+ * Output     - Updating the User Interface, and notifying the user of invalid moves
+-->
+
+<!--Define the type of Document-->
 <!DOCTYPE html>
+
+<!--Define the language of the markup encoding-->
 <html lang="en">
+    <!--Define the head of the page-->
     <head>
+        <!--Define the meta characteristics of the page, including its charset encoding and viewport information-->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <!--Link the CSS file and the Javascript engine for the puzzle-->
         <link href="sudoku.css" rel="stylesheet" type="text/css">
         <script src="SudokuEngine.js"></script>
 
+        <!--Define the title of the page-->
         <title>PuzzleMania Game</title>
     </head>
 
+    <!--Define the body of the page-->
     <body>
-        <div style="width:100%;font-size:200%;text-align:center;">
-            <h1 style = "color:white;margin-top:0;margin-bottom:0">PuzzleMania</h1>
+        <!--Define a container for the table-->
+        <div style = "width: 100%; font-size: 200%; text-align: center;">
+            <!--Define page header-->
+            <h1 style = "color: white; margin-top: 0;margin-bottom: 0">PuzzleMania</h1>
+
+            <!--Define the table itself-->
             <table border="1" id="sudokuTable">
             </table>
         </div>
 
-        <!--The script data-->
+        <!--Load the scripts to run the page
+            - Set up the table
+            - Set up the Board
+            - Run the puzzle
+        -->
         <script>
             GenerateTable();
             GenerateBoard();
