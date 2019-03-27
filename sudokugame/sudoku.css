@@ -34,3 +34,21 @@ body
     background: url("cosmo.jpg") no-repeat;
     background-size: cover;
 }
+
+/* Set the styling features for the "h1" feature */
+h1
+{
+    /* Set the color and margin of the header */
+    color: white;
+    margin-top: 0;
+    margin-bottom: 0
+}
+
+/* Set the styling features for the "div" feature */
+div
+{
+    /* Set the width, font-size and text align of the fiv feature */
+    width: 100%;
+    font-size: 200%;
+    text-align: center;
+}
