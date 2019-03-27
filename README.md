@@ -1,6 +1,11 @@
 # PrinOfSoft-FinalProject
 A repository for the Final Project for Principles of Software &amp; Requirements for Engineering (SOFE 2720) course. The project is to design a Sudoku game on a computer interface using the Agile process
 
+How to play the game?
+The sudoku game is divded into 3 files, an html, css and javscript file. Go over to the repository and then click clone or download as a zip file. Extract the file and then open the sudoku game folder and then open the sudoku.html file in which there you will bring up the game. When you open the game the grid is filled with some numbers randoly geenrated in the cells with a majority of them being blank for the user to solve. Once the game is opened, the game can be played by the user selecting a cell where a selection list will display with numbers 1-9 for the user to select. To decide what number to input, the user must follow the rules of the sudoku game which are:
+  1) Within each 3x3 quadrant, no same number can be repeated
+  2) Cannot have the same number within the same row or column twice
+
 Technology used: HTML, CSS and JavaScript
 
 Stucture:
@@ -14,4 +19,5 @@ Improvment for Future Versions:
 - Instead of a drop down box to select a number, hoverng over a quandrant will display the options in a circle. 
 - When a user enters in a number wrong or doesn't fullfill one of the rules, the quadrant will become red
 - If the user enters in a number correctly and fullfill's all rules, the quadrant will become blue 
+- For the numbers that are randomly generated in the cells when the game is opened or refreshed, user's shouldn't be able to modify and edit that cell. There should be no selection list for those particular cells. 
 
