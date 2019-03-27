@@ -70,37 +70,55 @@ function GetQuadrantData(row, column)
 }
 
 /**
+ * Changes() Function:
+ * - A function that detects user inputs and responds accordingly. It also checks if the user has won the game or not.
  *
- * @param which
- * @returns {boolean}
+ * @param which The particular index of the code that has changed
+ * @returns {boolean} Whether the user won the game or not
  */
-function changed(which)
+function Changes(which)
 {
-    //get the row and the column of "which"
+    // Get the row and the column of "which"
     var rc = which.getAttribute("id");
-    //alert(rc);
+
+    // Slice the given ID into a row and column
     var r = rc.slice(6, 7);
     var c = rc.slice(8, 9);
 
-    //check the same row for any other ones
-    for (var cc = 0; cc < 9; cc++) {
-        if (!(cc == c)) {
-            var otherSelected = document.getElementById("select" + r + "_" + cc);
-            if (otherSelected.selectedIndex === which.selectedIndex) {
+    // Check the same row to see if any other number is the same as what the user entered
+    for (var rowEntries = 0; rowEntries < 9; rowEntries++)
+    {
+        // This ignores the entry that is being checked
+        if (!(rowEntries == c))
+        {
+            // Get the value at that point
+            var otherSelected = document.getElementById("select" + r + "_" + rowEntries);
+
+            // If the 2 values match
+            if (otherSelected.selectedIndex === which.selectedIndex)
+            {
+                // Warn the user of a duplicate entry in the row; an invalid move.
+                // Reset the value and return false
                 alert('There is already that number in the same row.  Please select another value');
                 which.selectedIndex = 0;
                 return false;
             }
         }
-
     }
 
+    // Check the same column to see if any other number is the same as what the user entered
+    for (var columnEntries = 0; columnEntries < 9; columnEntries++)
+    {
+        // This ignores the row entry of the column being checked
+        if (!(columnEntries == r))
+        {
+            // Get the value at that point
+            var otherSelected = document.getElementById("select" + columnEntries + "_" + c);
 
-    //check the same column
-    for (var rr = 0; rr < 9; rr++) {
-        if (!(rr == r)) {
-            var otherSelected = document.getElementById("select" + rr + "_" + c);
-            if (otherSelected.selectedIndex === which.selectedIndex) {
+            // If another column entry has the same value as that row
+            if (otherSelected.selectedIndex === which.selectedIndex)
+            {
+                // Alert user of invalid move, undo move, and return false
                 alert('There is already that number in the same column.  Please select another value');
                 which.selectedIndex = 0;
                 return false;
@@ -109,17 +127,29 @@ function changed(which)
 
     }
 
-    //check in the same quadrant
-
+    //check within the same quadrant
     var myQ = GetQuadrantData(r, c);
-    for (var r1 = 0; r1 < 9; r1++) {
-        for (var c1 = 0; c1 < 9; c1++) {
+
+    // Iterate over each row
+    for (var r1 = 0; r1 < 9; r1++)
+    {
+        // Iterate over each entry of that row
+        for (var c1 = 0; c1 < 9; c1++)
+        {
+            // If the entry is the one being checked
             if (r1 == r && c1 == c)
                 continue;
-            if (myQ === GetQuadrantData(r1, c1)) {
-                //    alert(GetQuadrantData(r1,c1));
+
+            // If the value is obtained successfully
+            if (myQ === GetQuadrantData(r1, c1))
+            {
+                // Get the ID of the cell that the user edited
                 var otherSelected = document.getElementById("select" + r1 + "_" + c1);
-                if (which.selectedIndex === otherSelected.selectedIndex) {
+
+                // If any cell's value matches the one being compared
+                if (which.selectedIndex === otherSelected.selectedIndex)
+                {
+                    // Alert the user of the invalid move, undo the move, and return false
                     alert('There is already that number in the same quadrant.  Please select another value');
                     which.selectedIndex = 0;
                     return false;
@@ -128,24 +158,34 @@ function changed(which)
         }
     }
 
-    //check if win
+    // Define a variable to track if the user won
     var win = true;
-    for (var rz = 0; rz < 9; rz++) {
-        for (var cz = 0; cz < 9; cz++) {
+
+    // Iterate over the entire puzzle through its rows
+    for (var rz = 0; rz < 9; rz++)
+    {
+        // Iterate over every column (cell) of each row
+        for (var cz = 0; cz < 9; cz++)
+        {
+            // Get the value at that particular index
+            // If the index is empty
             var s = document.getElementById("select" + rz + "_" + cz);
-            if (s.selectedIndex === 0) {
+            if (s.selectedIndex === 0)
+            {
+                // Then the user has not won yet
                 win = false;
                 break;
             }
         }
-        if (!win) {
+
+        // If the boolean variable is falsified, then break from the loop
+        if (!win)
             break;
-        }
     }
 
-    if (win) {
+    // If the user won, then alert the user.
+    if (win)
         alert("You win the game!");
-    }
 
 }
 
@@ -193,7 +233,7 @@ function GenerateTable()
             // Define the HTML data-filling of the cell tag
             var cell = row.insertCell(columnNumber);
             cell.innerHTML =
-                    "<select id='select" + rowNumber + "_" + columnNumber + "' onchange='changed(this);'>" +
+                    "<select id='select" + rowNumber + "_" + columnNumber + "' onchange='Changes(this);'>" +
                     "<option value='0' selected> </option>" +
                     "<option value='1' > 1</option>" +
                     "<option value='2' > 2</option>" +
